@@ -4,7 +4,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 /* ============ CONFIG ============ */
-const NFTY_TOPIC ="dumzday-bday-x7k29q";
 const BIRTHDAY = new Date("2026-10-26T00:00:00+01:00").getTime(); // midnight WAT
 const CANDLES = 5;
 const COOLDOWN_MS = 30000;
@@ -372,13 +371,6 @@ form.addEventListener("submit", async (e) => {
   try {
     const reactions = Object.fromEntries(REACTIONS.map((r) => [r.key, 0]));
     await addDoc(collection(db, "wishes"), { name, message, reactions, createdAt: serverTimestamp() });
-
-  fetch(`https://ntfy.sh/${NTFY_TOPIC}`, {
-    method: "POST",
-    headers: { Title: "New birthday wish", Tags: "tada" },
-    body: `${name}: ${message}`,
-  }).catch(() => {});
-
     try { localStorage.setItem("lastWish", String(Date.now())); } catch {}
     form.reset();
     $("charCount").textContent = "0 / 200";
