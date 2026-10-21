@@ -41,7 +41,7 @@ const TIMELINE = [
   { year: 2025, photo: "photos/CSC.jpg", caption: "I also join my department football team CSC" },
   { year: 2025, photo: "photos/blue.jpg", caption: "My team" },
   { year: 2025, photo: "photos/alvan.jpg", caption: "An away game to Alvan university" },
-  { year: 2025, photo: "photos/glasses.jpg", caption: "Was in anambra that day for my pastor Traditional marriage" },
+  { year: 2025, photo: "photos/white.jpg", caption: "Was in anambra that day for my pastor Traditional marriage" },
   { year: 2026, photo: "photos/swag.jpeg", caption: "Blue is my color now" },
   { year: 2026, photo: "photos/code.jpg", caption: "My work space" },
   { year: 2026, photo: "photos/work.png", caption: "How I got here, it was God." },
