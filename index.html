@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dumzday's Birthday</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Dumzday's Birthday 🎂 | Oct 26">
+  <meta property="og:description" content="Play the candle game, browse the timeline and leave me a wish.">
+  <meta property="og:image" content="https://YOUR-SITE.vercel.app/work.png">
+  <meta property="og:url" content="https://YOUR-SITE.vercel.app/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="description" content="Counting down to Dumzday's birthday. Browse the timeline, play the games and leave a wish.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <section class="hero">
+    <p class="eyebrow">Counting down to</p>
+    <h1 id="headline">Dumzday's Birthday 🎂</h1>
+
+    <div class="countdown" id="countdown">
+      <div class="box"><span id="days">00</span><small>Days</small></div>
+      <div class="box"><span id="hours">00</span><small>Hours</small></div>
+      <div class="box"><span id="mins">00</span><small>Mins</small></div>
+      <div class="box"><span id="secs">00</span><small>Secs</small></div>
+    </div>
+
+    <p id="subline">October 26</p>
+    <a class="scroll-hint" href="#story">Scroll down ↓</a>
+  </section>
+
+  <section class="story" id="story">
+    <div class="glass-card story-card">
+      <div class="avatar" aria-hidden="true">V</div>
+      <div>
+        <h2>Another year, still building</h2>
+        <p>I'm Victor (Dumzday). I've dreamed of building things since I was very young, so when I got to 100 level and picked web design in ENT, it felt like the right choice. It's still one of the things I'm proudest of.
+          Today I build website under VicWeb. I'm a football lover (Chelsea, always 💙), hardworking, funny, and yes, a little clingy sometimes. I'm hoping to grow my ideas into something that helps people for years to come.
+          To my friends and family who've backed me all the way: thank you. This page is for you.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="timeline" id="timeline">
+    <h2>Through the years</h2>
+    <p class="lead">A look back, one year at a time.</p>
+    <ol class="tl" id="tl"></ol>
+    <div class="tl-controls">
+      <button id="tlPrev" class="tl-btn" type="button" aria-label="Previous year">‹</button>
+      <span class="tl-hint">Swipe through the years</span>
+      <button id="tlNext" class="tl-btn" type="button" aria-label="Next year">›</button>
+    </div>
+  </section>
+
+  <section class="play" id="play">
+    <h2>Blow out the candles</h2>
+    <p class="lead">Tap the mic button and blow into your phone, or just tap each candle.</p>
+
+    <div class="cake" aria-label="Birthday cake with candles">
+      <div class="candles" id="candles"></div>
+      <div class="tier t1"></div>
+      <div class="tier t2"></div>
+    </div>
+
+    <p id="gameStatus" class="status" role="status" aria-live="polite">5 candles lit</p>
+
+    <div class="actions">
+      <button id="micBtn" class="btn primary" type="button">🎤 Blow with mic</button>
+      <button id="relightBtn" class="btn ghost" type="button">Relight</button>
+    </div>
+  </section>
+
+  <section class="quiz" id="quiz">
+    <h2>How well do you know Dumzday?</h2>
+    <p class="lead">Seven questions. No googling.</p>
+
+    <div class="glass-card quiz-card">
+      <div id="quizPlay">
+        <div class="bar"><span id="quizProgress"></span></div>
+        <small id="quizCount"></small>
+        <h3 id="quizQuestion"></h3>
+        <div id="quizOptions" class="opts"></div>
+        <p id="quizFeedback" class="feedback" role="status" aria-live="polite"></p>
+        <button id="quizNext" class="btn primary" type="button" hidden>Next question</button>
+      </div>
+
+      <div id="quizResult" hidden>
+        <p class="score" id="quizScore"></p>
+        <p id="quizVerdict"></p>
+        <div class="actions">
+          <button id="quizRestart" class="btn ghost" type="button">Play again</button>
+          <a class="btn primary" href="#wall">Leave a wish</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wall" id="wall">
+    <h2>Wish wall</h2>
+    <p class="lead">Leave a name and a message, then react to other wishes.</p>
+
+    <form id="wishForm" class="glass-card wish-form" autocomplete="off">
+      <label for="wishName">Your name</label>
+      <input id="wishName" name="name" type="text" maxlength="30" required placeholder="e.g. Tola">
+
+      <label for="wishMsg">Your wish</label>
+      <textarea id="wishMsg" name="message" maxlength="200" rows="3" required placeholder="Happy birthday Dumzday!"></textarea>
+
+      <div class="form-foot">
+        <small id="charCount">0 / 200</small>
+        <button class="btn primary" type="submit" id="wishBtn">Send wish</button>
+      </div>
+      <p id="formMsg" class="form-msg" role="status" aria-live="polite"></p>
+    </form>
+
+    <div id="wishes" class="wishes">
+      <p class="empty">No wishes yet. Be the first.</p>
+    </div>
+  </section>
+
+  <section class="cta" id="work">
+  <div class="glass-card cta-card">
+    <p class="eyebrow">Built by VicWeb</p>
+    <h2>Need a website like this?</h2>
+    <p>I build fast, good-looking websites for businesses, churches and personal brands, plus interactive pages like this one. Let's build yours.</p>
+    <a class="btn primary" href="https://vicweb-portfolio.vercel.app" target="_blank" rel="noopener">See my portfolio</a>
+  </div>
+</section>
+
+  <footer>
+   <p>Built by Dumzday · VicWeb</p>
+  </footer>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
+
