@@ -559,3 +559,100 @@ $("quizNext").addEventListener("click", () => {
 $("quizRestart").addEventListener("click", restart);
 
 render();
+
+/* ============ BALLOON POP (unlocks on the birthday) ============ */
+const popUnlocked = preview || Date.now() >= BIRTHDAY;
+$("popLocked").hidden = popUnlocked;
+$("popPlay").hidden = !popUnlocked;
+
+if (popUnlocked) {
+  const arena = $("arena");
+  const scoreEl = $("popScore");
+  const timeEl = $("popTime");
+  const startBtn = $("popStart");
+  const scoreForm = $("scoreForm");
+  const GAME_SECONDS = 20;
+  let popScore = 0, lastScore = 0, timeLeft = GAME_SECONDS, spawnT, clockT, running = false;
+
+  function spawn() {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "pop-balloon";
+    b.setAttribute("aria-label", "Pop balloon");
+    b.style.left = Math.random() * 85 + "%";
+    b.style.background = ["#3b82f6", "#22e6a8", "#ffffff"][(Math.random() * 3) | 0];
+    b.style.animationDuration = 2.2 + Math.random() * 2 + "s";
+    b.addEventListener("pointerdown", () => {
+      if (!running) return;
+      popScore++;
+      scoreEl.textContent = popScore;
+      b.classList.add("popped");
+      setTimeout(() => b.remove(), 150);
+    });
+    b.addEventListener("animationend", () => b.remove());
+    arena.appendChild(b);
+  }
+
+  function end() {
+    running = false;
+    clearInterval(spawnT);
+    clearInterval(clockT);
+    arena.innerHTML = "";
+    lastScore = popScore;
+    startBtn.hidden = false;
+    startBtn.textContent = "Play again";
+    $("popResult").textContent = `You popped ${lastScore} balloon${lastScore === 1 ? "" : "s"}!`;
+    scoreForm.hidden = lastScore === 0 || !db;
+    if (lastScore >= 15) burst(120);
+  }
+
+  function start() {
+    popScore = 0;
+    timeLeft = GAME_SECONDS;
+    running = true;
+    scoreEl.textContent = 0;
+    timeEl.textContent = timeLeft;
+    scoreForm.hidden = true;
+    startBtn.hidden = true;
+    spawnT = setInterval(spawn, 450);
+    clockT = setInterval(() => {
+      timeEl.textContent = --timeLeft;
+      if (timeLeft <= 0) end();
+    }, 1000);
+  }
+  startBtn.addEventListener("click", start);
+
+  scoreForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = $("scoreName").value.trim().slice(0, 30);
+    if (!name || !db) return;
+    $("scoreBtn").disabled = true;
+    try {
+      await addDoc(collection(db, "scores"), { name, score: lastScore, createdAt: serverTimestamp() });
+      scoreForm.hidden = true;
+      $("popResult").textContent = "Score saved. Check the leaderboard!";
+    } catch {
+      $("popResult").textContent = "Couldn't save your score. Try again.";
+    } finally {
+      $("scoreBtn").disabled = false;
+    }
+  });
+
+  if (db) {
+    onSnapshot(query(collection(db, "scores"), orderBy("score", "desc"), limit(10)), (snap) => {
+      const board = $("board");
+      board.innerHTML = "";
+      if (snap.empty) { board.innerHTML = '<li class="empty">No scores yet. Be the first.</li>'; return; }
+      snap.forEach((d) => {
+        const { name, score } = d.data();
+        const li = document.createElement("li");
+        const n = document.createElement("span");
+        const s = document.createElement("b");
+        n.textContent = name;
+        s.textContent = score;
+        li.append(n, s);
+        board.appendChild(li);
+      });
+    }, () => {});
+  }
+}

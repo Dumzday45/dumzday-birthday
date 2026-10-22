@@ -109,6 +109,31 @@
     </div>
   </section>
 
+  <section class="pop" id="pop">
+  <h2>Balloon Pop 🎈</h2>
+  <p class="lead">Pop as many balloons as you can in 20 seconds.</p>
+
+  <div id="popLocked" class="glass-card pop-card">
+    <p class="lock">🔒</p>
+    <p>Unlocks on my birthday, October 26. Come back and beat the leaderboard.</p>
+  </div>
+
+  <div id="popPlay" class="glass-card pop-card" hidden>
+    <div class="pop-bar"><span>Score: <b id="popScore">0</b></span><span>Time: <b id="popTime">20</b>s</span></div>
+    <div class="arena" id="arena" aria-label="Balloon pop arena"></div>
+    <button id="popStart" class="btn primary" type="button">Start</button>
+
+    <form id="scoreForm" hidden>
+      <p id="popResult"></p>
+      <input id="scoreName" type="text" maxlength="30" required placeholder="Your name">
+      <button class="btn primary" type="submit" id="scoreBtn">Save my score</button>
+    </form>
+
+    <h3>Top 10</h3>
+    <ol id="board" class="board"><li class="empty">No scores yet.</li></ol>
+  </div>
+</section>
+
   <section class="wall" id="wall">
     <h2>Wish wall</h2>
     <p class="lead">Leave a name and a message, then react to other wishes.</p>
