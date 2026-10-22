@@ -107,32 +107,64 @@ function drawConfetti() {
 
 /* ============ COUNTDOWN ============ */
 const pad = (n) => String(n).padStart(2, "0");
+const preview = new URLSearchParams(location.search).get("preview") === "birthday";
 let timer;
+let dayStarted = false;
+
+function floatBalloons() {
+  if (reduceMotion) return;
+  const box = $("balloons");
+  const colors = ["#3b82f6", "#22e6a8", "#ffffff"];
+  for (let i = 0; i < 18; i++) {
+    const b = document.createElement("span");
+    b.className = "balloon";
+    b.style.left = Math.random() * 95 + "%";
+    b.style.background = colors[i % colors.length];
+    b.style.animationDuration = 7 + Math.random() * 6 + "s";
+    b.style.animationDelay = Math.random() * 4 + "s";
+    b.style.setProperty("--sway", Math.random() * 60 - 30 + "px");
+    box.appendChild(b);
+    setTimeout(() => b.remove(), 18000);
+  }
+}
+
+function startDay() {
+  if (dayStarted) return;
+  dayStarted = true;
+  clearInterval(timer);
+  $("headline").textContent = "Happy Birthday to me 🎉";
+  $("countdown").style.display = "none";
+  $("subline").textContent = "Thank you for being part of my year. Leave me a wish below 👇";
+
+  let seen = false;
+  try { seen = sessionStorage.getItem("ddaySeen") === "1"; } catch {}
+  if (seen && !preview) { floatBalloons(); return; }
+
+  const overlay = $("dday");
+  overlay.hidden = false;
+  document.body.style.overflow = "hidden";
+  $("ddayBtn").addEventListener("click", () => {
+    overlay.classList.add("gone");
+    document.body.style.overflow = "";
+    try { sessionStorage.setItem("ddaySeen", "1"); } catch {}
+    burst(260);
+    setTimeout(() => burst(160), 600);
+    floatBalloons();
+  }, { once: true });
+}
 
 function tick() {
-  const diff = BIRTHDAY - Date.now();
-
-  if (diff <= 0) {
-    $("headline").textContent = "It's the day! 🎉";
-    $("countdown").style.display = "none";
-    $("subline").textContent = "Leave me a wish below 👇";
-    clearInterval(timer);
-    try {
-      if (!sessionStorage.getItem("bdayBurst")) {
-        sessionStorage.setItem("bdayBurst", "1");
-        burst(220);
-      }
-    } catch { burst(220); }
-    return;
-  }
+  const diff = preview ? 0 : BIRTHDAY - Date.now();
+  if (diff <= 0) return startDay();
 
   $("days").textContent = pad(Math.floor(diff / 86400000));
   $("hours").textContent = pad(Math.floor((diff / 3600000) % 24));
   $("mins").textContent = pad(Math.floor((diff / 60000) % 60));
   $("secs").textContent = pad(Math.floor((diff / 1000) % 60));
 }
+
 tick();
-timer = setInterval(tick, 1000);
+if (!dayStarted) timer = setInterval(tick, 1000);
 
 /* ============ CANDLE GAME ============ */
 const candlesEl = $("candles");
