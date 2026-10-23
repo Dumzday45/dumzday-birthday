@@ -462,6 +462,9 @@ const QUESTIONS = [
     answer: 0,
     fun: "Blue and black, no contest.",
   },
+  ];
+
+  const BONUS_QUESTIONS = [
   {
     q: "What word do I say all the time?",
     options: ["Guy", "Bro", "Chief", "Boss"],
@@ -532,14 +535,11 @@ const QUESTIONS = [
     fun: "Gospel on repeat. 🎶",
   },
 ];
+const bonusOpen = preview || Date.now() >= BIRTHDAY;
+if (bonusOpen) QUESTIONS.push(...BONUS_QUESTIONS);
 
-$("bonusNote").textContent = bonusOpen
-  ? `🎉 ${BONUS_QUESTIONS.length} bonus questions unlocked for my birthday.`
-  : `🔒 ${BONUS_QUESTIONS.length} bonus questions unlock on October 26. Come back then.`;
+document.querySelector("#quiz .lead").textContent = `${QUESTIONS.length} questions. No googling.`;
 
-if (bonusOpen) {
-  document.querySelector("#quiz h2").insertAdjacentHTML("beforeend", ' <span class="new-badge">NEW</span>');
-}
 
 /* ============ QUIZ ENGINE ============ */
 let i = 0;
@@ -643,6 +643,7 @@ $("popLocked").hidden = popUnlocked;
 $("popPlay").hidden = !popUnlocked;
 
 if (popUnlocked) {
+  document.querySelector("#pop h2").insertAdjacentHTML("beforeend", ' <span class="new-badge">NEW</span>');
   const arena = $("arena");
   const scoreEl = $("popScore");
   const timeEl = $("popTime");
