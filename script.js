@@ -422,7 +422,7 @@ form.addEventListener("submit", async (e) => {
 const QUESTIONS = [
   {
     q: "What's my favourite food?",
-    options: ["Spaghetti", "Jollof rice", "Rice and stwe", "Bread and custard"],
+    options: ["Spaghetti", "Jollof rice", "Rice and stew", "Bread and custard"],
     answer: 0,
     fun: "Spaghetti, always.",
   },
@@ -462,7 +462,84 @@ const QUESTIONS = [
     answer: 0,
     fun: "Blue and black, no contest.",
   },
+  {
+    q: "What word do I say all the time?",
+    options: ["Guy", "Bro", "Chief", "Boss"],
+    answer: 0,
+    fun: "Guy! You know it. 😄",
+  },
+  {
+    q: "Who is my GOAT?",
+    options: ["Ronaldo", "Messi", "Pelé", "Maradona"],
+    answer: 0,
+    fun: "SIUUU! 🐐",
+  },
+  {
+    q: "Who is my favourite Chelsea player?",
+    options: ["Cole Palmer", "Morgan Rogers", "Joao Pedro", "Moisés Caicedo"],
+    answer: 0,
+    fun: "Cold Palmer. 🧊",
+  },
+  {
+    q: "What's my best Chelsea moment?",
+    options: [
+      "Beating PSG in the 2025 Club World Cup final",
+      "Winning the 2012 Champions League",
+      "Winning the 2017 Premier League title",
+      "Winning the 2021 Champions League",
+    ],
+    answer: 0,
+    fun: "Blue is the colour, and 2025 was the night. 💙",
+  },
+  {
+    q: "Which anime do I love?",
+    options: ["Demon Slayer and Naruto", "JJK and Blue lock", "Attack on Titan only", "Naruto only"],
+    answer: 0,
+    fun: "Believe it! 🍥",
+  },
+  {
+    q: "Which horror film is my favourite?",
+    options: ["The Conjuring", "Ice Cream man", "Sinister", "Anabelle"],
+    answer: 0,
+    fun: "Don't watch it alone. 👻",
+  },
+  {
+    q: "Which three places do I most want to visit?",
+    options: [
+      "England, Japan and Canada",
+      "Dubai, Brazil and England",
+      "Italy, Mexico and Paris",
+      "Australia, Spain and China",
+    ],
+    answer: 0,
+    fun: "Pack the bags. ✈️",
+  },
+  {
+    q: "What do my friends tease me about?",
+    options: ["Loving football too much", "Always being late", "Sleeping all day", "Eating too much"],
+    answer: 0,
+    fun: "Guilty, football is life. ⚽",
+  },
+  {
+    q: "Whose music do I play on repeat?",
+    options: [
+      "Prinx Emmanuel and Moses Bliss",
+      "GUC",
+      "Nathaniel Bassey",
+      "Greatman takit",
+    ],
+    answer: 0,
+    fun: "Gospel on repeat. 🎶",
+  },
 ];
+
+$("bonusNote").textContent = bonusOpen
+  ? `🎉 ${BONUS_QUESTIONS.length} bonus questions unlocked for my birthday.`
+  : `🔒 ${BONUS_QUESTIONS.length} bonus questions unlock on October 26. Come back then.`;
+
+if (bonusOpen) {
+  document.querySelector("#quiz h2").insertAdjacentHTML("beforeend", ' <span class="new-badge">NEW</span>');
+}
 
 /* ============ QUIZ ENGINE ============ */
 let i = 0;
