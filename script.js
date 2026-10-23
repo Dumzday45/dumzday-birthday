@@ -540,6 +540,13 @@ if (bonusOpen) QUESTIONS.push(...BONUS_QUESTIONS);
 
 document.querySelector("#quiz .lead").textContent = `${QUESTIONS.length} questions. No googling.`;
 
+$("bonusNote").textContent = bonusOpen
+  ? `🎉 ${BONUS_QUESTIONS.length} bonus questions unlocked for my birthday.`
+  : `🔒 ${BONUS_QUESTIONS.length} bonus questions unlock on October 26. Come back then.`;
+
+if (bonusOpen) {
+  document.querySelector("#quiz h2").insertAdjacentHTML("beforeend", ' <span class="new-badge">NEW</span>');
+}
 
 /* ============ QUIZ ENGINE ============ */
 let i = 0;
